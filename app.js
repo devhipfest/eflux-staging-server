@@ -64,6 +64,7 @@ app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/stations', require('./routes/stationRoutes'))
 app.use('/api/machines', require('./routes/machineRoutes'))
 app.use('/api/payments', require('./routes/paymentRoutes'))
+app.use('/api/transactions', require('./routes/transactionRoutes'))
 
 app.use('/test-mqtt', require('./routes/testMQTTRouter'))
 app.use('/sepay', require('./routes/sepayRouter'))
