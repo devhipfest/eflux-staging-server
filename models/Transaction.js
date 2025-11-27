@@ -4,7 +4,8 @@ const transactionSchema = new mongoose.Schema(
   {
     // Map tới ChargingSession (nếu là giao dịch EFLUX)
     sessionId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ChargingSession',
       required: false,
     },
 

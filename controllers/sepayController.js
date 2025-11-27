@@ -54,11 +54,8 @@ exports.webhook = async (req, res) => {
       // Lấy đoạn giữa EFLUX → .CT
       fluxBlock = rawContent.substring(start, end)
 
-      // Bóc lấy sessionId = dãy số cuối cùng
-      const digits = fluxBlock.match(/(\d{3,})$/)
-      if (digits) {
-        sessionId = digits[1]
-      }
+      // Bóc lấy sessionId = phần sau EFLUX
+      sessionId = fluxBlock.substring(5) // bỏ 'EFLUX'
     }
 
     // Nếu không phải EFLUX thì bỏ qua
