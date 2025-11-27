@@ -39,19 +39,24 @@ exports.webhook = async (req, res) => {
 
     // ===== 2. Chuẩn hoá content =====
     const data = req.body
-    const rawContent = (data.content || '').toUpperCase()
-    const clean = rawContent.replace(/\s+/g, '')
+    const rawContent = (data.content || '').toUpperCase().replace(/\s+/g, '')
 
-    // ===== 3. Parse EFLUX content =====
     let isEFLUX = false
+    let fluxBlock = null
     let sessionId = null
 
-    const idx = clean.indexOf('EFLUX')
-    if (idx !== -1) {
-      const tail = clean.substring(idx + 5) // phần sau EFLUX
-      const digits = tail.match(/(\d{3,})$/) // lấy số ở cuối
+    const start = rawContent.indexOf('EFLUX')
+    const end = rawContent.indexOf('.CT')
+
+    if (start !== -1 && end !== -1 && end > start) {
+      isEFLUX = true
+
+      // Lấy đoạn giữa EFLUX → .CT
+      fluxBlock = rawContent.substring(start, end)
+
+      // Bóc lấy sessionId = dãy số cuối cùng
+      const digits = fluxBlock.match(/(\d{3,})$/)
       if (digits) {
-        isEFLUX = true
         sessionId = digits[1]
       }
     }
