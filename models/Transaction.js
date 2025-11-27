@@ -2,38 +2,42 @@ const mongoose = require('mongoose')
 
 const transactionSchema = new mongoose.Schema(
   {
+    // Map tới ChargingSession (nếu là giao dịch EFLUX)
     sessionId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ChargingSession',
       required: false,
     },
 
-    // thông tin từ Sepay
-    gateway: { type: String }, // Vietcombank
+    // ====== DỮ LIỆU THUẦN SEPAY ======
+    gateway: { type: String }, // vietcombank, mbbank...
     transactionDate: { type: Date, required: true },
-    accountNumber: { type: String, required: true }, // tài khoản nhận tiền
-    code: { type: String }, // ( null cũng oke)
-    content: { type: String }, // nội dung chuyển khoản
+    accountNumber: { type: String, required: true },
+    code: { type: String },
+    content: { type: String }, // nội dung CK
     transferType: { type: String }, // in / out
-    transferAmount: { type: Number, required: true }, // số tiền user chuyển
-
-    accumulated: { type: Number }, // số dư sau giao dịch
-    subAccount: { type: String }, // nếu dùng tài khoản phụ
+    transferAmount: { type: Number, required: true },
+    accumulated: { type: Number },
+    subAccount: { type: String },
 
     referenceCode: {
       type: String,
-      unique: true, // tránh trùng giao dịch
+      unique: true,
       required: true,
       index: true,
     },
 
     description: { type: String },
 
+    // ====== STATUS NỘI BỘ HỆ THỐNG ======
     status: {
       type: String,
-      enum: ['success', 'failed'],
+      enum: ['success', 'ignored'],
       default: 'success',
     },
+
+    // Lưu raw API body từ SePay để audit
+    raw: { type: Object, required: true },
   },
   { timestamps: true },
 )
