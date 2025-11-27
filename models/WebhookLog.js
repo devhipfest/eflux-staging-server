@@ -7,7 +7,7 @@ const WebhookLogSchema = new mongoose.Schema(
     body: { type: Object }, // raw data từ webhook
     status: {
       type: String,
-      enum: ['received', 'processed', 'error'],
+      enum: ['received', 'ignored', 'processed', 'error'],
       default: 'received',
     },
     errorMessage: { type: String, default: null }, // nếu có lỗi xử lý

@@ -4,8 +4,7 @@ const transactionSchema = new mongoose.Schema(
   {
     // Map tới ChargingSession (nếu là giao dịch EFLUX)
     sessionId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'ChargingSession',
+      type: String,
       required: false,
     },
 
@@ -35,9 +34,6 @@ const transactionSchema = new mongoose.Schema(
       enum: ['success', 'ignored'],
       default: 'success',
     },
-
-    // Lưu raw API body từ SePay để audit
-    raw: { type: Object, required: true },
   },
   { timestamps: true },
 )
