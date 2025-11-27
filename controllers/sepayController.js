@@ -23,6 +23,7 @@ exports.webhook = async (req, res) => {
         status: 'error',
         errorMessage: 'Missing or invalid API key',
       })
+      console.log('Unauthorized: ', 'Missing or invalid API key')
       return res.status(401).json({ message: 'Unauthorized' })
     }
 
@@ -32,6 +33,7 @@ exports.webhook = async (req, res) => {
         status: 'error',
         errorMessage: 'Wrong API key',
       })
+      console.log('Forbidden')
       return res.status(403).json({ message: 'Forbidden' })
     }
 
@@ -60,6 +62,7 @@ exports.webhook = async (req, res) => {
         status: 'ignored',
         note: 'Not an EFLUX payment',
       })
+      console.log('Ignored (not EFLUX)')
       return res.status(200).json({ message: 'Ignored (not EFLUX)' })
     }
 
@@ -73,6 +76,7 @@ exports.webhook = async (req, res) => {
           note: 'Duplicate transaction',
           transactionId: exists._id,
         })
+        console.log('Ignored (Duplicate transaction)')
         return res.status(200).json({ message: 'Duplicate ignored' })
       }
     }
