@@ -1,7 +1,7 @@
 const WebhookLog = require('../models/WebhookLog')
 const Transaction = require('../models/Transaction')
 
-exports.sepayWebhook = async (req, res) => {
+exports.webhook = async (req, res) => {
   const clientIp =
     req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress || req.ip
 
@@ -13,6 +13,8 @@ exports.sepayWebhook = async (req, res) => {
     status: 'received',
   })
 
+  console.log(req.headers)
+  console.log(req.body)
   try {
     // ===== 1. Validate API Key =====
     const apiKey = req.headers.authorization || ''
