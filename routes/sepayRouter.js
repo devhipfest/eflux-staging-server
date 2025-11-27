@@ -1,5 +1,5 @@
-const { webhook } = require('../controllers/sepayController')
+const { sepayWebhook } = require('../controllers/sepayController')
 const router = require('express').Router()
-router.post('/webhook', webhook)
+router.post('/webhook', sepayWebhook)
 
 module.exports = router
